@@ -1,21 +1,21 @@
 #!/bin/bash
 echo script must be run with internet connection on efi system
 sleep 5
-echo checking if gentoo
+echo "checking if gentoo"
 uname -rv > /uname.txt
 if ! grep -q "gentoo" /uname.txt
 then
 echo not gentoo
 rm /uname.txt
-echo What do you need to do in cf disk
+lsblk
+echo "enter your main drive (for example /dev/sda1):"
+read drive-name
+echo "What do you need to do in cf disk"
 echo 1G Linux partition
 echo [your ram size] swap partition
-echo last partition Linux - for the system
-cfdisk
-lsblk
-echo enter your main drive (for example /dev/sda1):
-read drive-name
-echo enter preffered Linux partition type:
+echo "last partition Linux - for the system"
+cfdisk {$drive-name}
+echo "enter preffered Linux partition type:"
 read partition-name
 if "$drive-name" != "/dev/sda" && "$drive-name" != "/dev/sdd"
 then
@@ -35,7 +35,7 @@ mkdir --parents /mnt/gentoo/efi
 mount {$drive-name}3 /mnt/gentoo
 fi
 cd /mnt/gentoo
-echo enter link to stage 3 file:
+echo "enter link to stage 3 file:"
 read install-file
 curl -o {$install-file}
 cp ~/script.sh /mnt/gentoo/script.sh
@@ -53,7 +53,7 @@ else
 echo gentoo
 rm /uname.txt
 mkdir /efi
-echo enter your first partition (for example: /dev/sda1)
+echo "enter your first partition (for example: /dev/sda1)"
 read first-partition
 mount {%first-partition} /efi
 emerge-webrsync

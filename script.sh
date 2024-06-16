@@ -35,9 +35,7 @@ mkdir --parents /mnt/gentoo/efi
 mount {$drive-name}3 /mnt/gentoo
 fi
 cd /mnt/gentoo
-echo "enter link to stage 3 file:"
-read install-file
-curl -o {$install-file}
+curl -o https://distfiles.gentoo.org/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20240609T164903Z.tar.xz
 cp ~/script.sh /mnt/gentoo/script.sh
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 mount --types proc /proc /mnt/gentoo/proc
